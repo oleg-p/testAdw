@@ -1,5 +1,7 @@
 <?php
 
+use console\modules\Arithmetic\Module as ArithmeticModule;
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -10,7 +12,11 @@ $params = array_merge(
 return [
     'id' => 'app-console',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => [
+        'log',
+        'arith',  //Это не обязательно, только если необходимо запускать модуль при любом запросе
+
+    ],
     'controllerNamespace' => 'console\controllers',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -30,6 +36,13 @@ return [
                     'levels' => ['error', 'warning'],
                 ],
             ],
+        ],
+    ],
+
+    'modules' => [
+        'arith' => [
+            'class' => ArithmeticModule::class,
+            'data' => [2, 8, 12, 7],
         ],
     ],
     'params' => $params,
